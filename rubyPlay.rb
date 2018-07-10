@@ -985,57 +985,104 @@
 #puts "sol35 #{sol(35)}"
 
 #FIB Frog
-
-def fibonacciArray(n)
-  fib = Array.new(n + 2, 0)
-  fib[1] = 1
-  (2..n + 1).each do |i|
-    fib[i] = fib[i - 1] + fib[i - 2]
-  end
-  fib
-end
-
-def solution(a)
-  minJumps = -1
-  position = -1
-  n = a.length
-  lastLeaf = n
-  fibArray = fibonacciArray(n)
-puts "fibArray #{fibArray}"
-  while(position <= n + 1)
-    canJump = canJumpToNFromPosition(position, lastLeaf, fibArray)
-    if canJump != -1
-      #Jumps from position to lastLeaf
-      #if lastLeaf = n DONE
-      minJumps += 1
-      break if lastLeaf == n
-
-    else
-      #Cannot Jump, so find lastLeaf
-      lastLeaf = indLastLeaf(a, lastLeaf)
-    end
-  end
-  minJumps
-end
-
-def canJumpToNFromPosition(position, n, fibArray)
-  canJumpToNFromPosition = - 1
-  (0..fibArray.length - 1).each do |i|
-    if fibArray[i] = n - position
-      canJumpToNFromPosition = i
-      break
-    end
-  end
-  canJumpToNFromPosition
-end
-
-def findLastLeaf(a, lastLeaf)
-  leaf = 0
-  a.length.downto(0).each do |i|
-    if a[i] = 1
-      leaf = i
-      break
-    end
-  end
-  leaf
-end
+# 
+# def fibonacciArray(n)
+#   fib = Array.new(n + 2, 0)
+#   fib[1] = 1
+#   (2..n + 1).each do |i|
+#     fib[i] = fib[i - 1] + fib[i - 2]
+#   end
+#   fib
+# end
+#
+# def solution(a)
+#   minJumps = 0
+#   position = -1
+#   latestPosition = -1
+#   n = a.length
+#   lastLeaf = n
+#   fibArray = fibonacciArray(n + 1)
+#   puts "fibArray #{fibArray}"
+#   while(position <= n + 1)
+#     puts "strating with position #{position}, lastLeaf #{lastLeaf}"
+#     canJump = canJumpToNFromPosition(position, lastLeaf, fibArray)
+#     puts "canJump #{canJump}"
+#     if canJump != -1
+#       #Jumps from position to lastLeaf
+#       #if lastLeaf = n DONE
+#       if canJump == 0
+#         puts "Getting getPreviousLeaf"
+#         lastLeaf = getPreviousLeaf(a, position)
+#         puts "getPreviousLeaf #{lastLeaf}"
+#         if lastLeaf == - 1
+#           minJumps = -1
+#           break
+#         else
+#           minJumps-= 1
+#           position = latestPosition
+#           next
+#         end
+#       end
+#       minJumps += 1
+#       break if lastLeaf == n
+#       latestPosition = position
+#       position = position + canJump
+#       lastLeaf = n
+#     else
+#       #Cannot Jump, so find lastLeaf
+#       secondToLastLeaf = lastLeaf
+#       lastLeaf = findLastLeaf(a, lastLeaf)
+#       break if lastLeaf == -1
+#     end
+#   end
+#   minJumps = -1 if minJumps == 0
+#   minJumps
+# end
+#
+# def canJumpToNFromPosition(position, n, fibArray)
+#   canJumpToNFromPosition = - 1
+#   leap = n - position
+#   leap = n + 1 if position == -1
+#   puts "leap #{leap}"
+#   (0..fibArray.length - 1).each do |i|
+#     if fibArray[i] == leap
+#       canJumpToNFromPosition = fibArray[i]
+#       break
+#     end
+#   end
+#   canJumpToNFromPosition
+# end
+#
+# def findLastLeaf(a, lastLeaf)
+#   leaf = -1
+#   lastLeaf -= 1
+#   lastLeaf.downto(0).each do |i|
+#     if a[i] == 1
+#       leaf = i
+#       break
+#     end
+#   end
+#   leaf
+# end
+#
+# def getPreviousLeaf(a, position)
+#   leaf = -1
+#   unless position - 1 < 0
+#     (position - 1).downto(0).each do |i|
+#       if a[i] == 1
+#         leaf = i
+#         break
+#       end
+#     end
+#   end
+#   leaf
+# end
+#
+# a = [0,0,0,1,1,0,1,0,0,0,0]
+# #a = [0,0,0,0,0,0,0,0,0,0]
+# #a = []
+# #a = [1]
+# #a = [1, 0, 0, 0, 0]
+# #a = [1, 1, 0, 0, 0]
+# minJumps = solution(a)
+# puts "minJumps are: #{minJumps} "
