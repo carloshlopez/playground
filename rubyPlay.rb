@@ -985,7 +985,7 @@
 #puts "sol35 #{sol(35)}"
 
 #FIB Frog
-# 
+#
 # def fibonacciArray(n)
 #   fib = Array.new(n + 2, 0)
 #   fib[1] = 1
@@ -1086,3 +1086,93 @@
 # #a = [1, 1, 0, 0, 0]
 # minJumps = solution(a)
 # puts "minJumps are: #{minJumps} "
+
+# # Ladder
+# def solution(a, b)
+#   l = a.max
+#   p_max = b.max
+#   fib = Array.new(l+2, 0)
+#   fib[1] = 1
+#   (2..l + 2).each do |i|
+#     # x modulo y = (x & (y − 1))
+#     #https://stackoverflow.com/questions/6670715/mod-of-power-2-on-bitwise-operators/6670766#6670766
+#     fib[i] = (fib[i-1] + fib[i-2]) & ((1 << p_max) - 1)
+#   end
+#   return_arr = Array.new(a.length, 0)
+#   (0..a.length - 1).each do |i|
+#     return_arr[i] = fib[a[i]+1] & ((1 << b[i]) - 1)
+#   end
+#   return_arr
+# end
+#
+# a = [4, 4, 5, 5, 1, 50000]
+# b = [3, 2, 4, 3, 1, 8]
+# #Expected solution [5, 1, 8, 0, 1]
+# puts "solution #{solution(a, b)}"
+
+# Binary Search
+
+def binarySearch(a, x)
+  n = a.length
+  beg = 0
+  ending = n - 1
+  result = -1
+  while (beg <= ending)
+    mid = (beg + ending) / 2
+    if (a[mid] <= x) #This condition can be changed to check for a validity in a problem
+      beg = mid + 1
+      result = mid
+    else
+      ending = mid - 1
+    end
+  end
+  result
+end
+
+
+
+
+# MinMaxDivision
+
+def solution(k, m, a)
+
+  n = a.length
+  beg = a.max
+  ending = a.inject(0, :+)
+
+  return ending if k ==1
+  return beg if k >= n
+  while (beg <= ending)
+
+    puts "Beginig #{beg} - Ending #{ending}"
+    mid = (beg + ending) / 2
+    puts "Mid #{mid}"
+    if (check(a, k, mid)) #This condition can be changed to check for a validity in a problem
+      ending = mid - 1
+    else
+      beg = mid + 1
+    end
+  end
+  beg
+end
+
+def check(a, max_block_count, mid)
+  block_sum = 0
+  block_count = 0
+  a.each do |i|
+    if block_sum + i > mid
+      block_sum = i
+      block_count += 1
+    else
+      block_sum += i
+    end
+    return false if block_count >= max_block_count
+  end
+  true
+end
+
+k = 3
+m = 5
+a = [2,1,5,1,2,2,2]
+
+puts "Min Large sum #{solution(k, m, a)}"
