@@ -1111,68 +1111,116 @@
 # puts "solution #{solution(a, b)}"
 
 # Binary Search
+#
+# def binarySearch(a, x)
+#   n = a.length
+#   beg = 0
+#   ending = n - 1
+#   result = -1
+#   while (beg <= ending)
+#     mid = (beg + ending) / 2
+#     if (a[mid] <= x) #This condition can be changed to check for a validity in a problem
+#       beg = mid + 1
+#       result = mid
+#     else
+#       ending = mid - 1
+#     end
+#   end
+#   result
+# end
+#
+#
+#
+#
+# # MinMaxDivision
+#
+# def solution(k, m, a)
+#
+#   n = a.length
+#   beg = a.max
+#   ending = a.inject(0, :+)
+#
+#   return ending if k ==1
+#   return beg if k >= n
+#   while (beg <= ending)
+#
+#     puts "Beginig #{beg} - Ending #{ending}"
+#     mid = (beg + ending) / 2
+#     puts "Mid #{mid}"
+#     if (check(a, k, mid)) #This condition can be changed to check for a validity in a problem
+#       ending = mid - 1
+#     else
+#       beg = mid + 1
+#     end
+#   end
+#   beg
+# end
+#
+# def check(a, max_block_count, mid)
+#   block_sum = 0
+#   block_count = 0
+#   a.each do |i|
+#     if block_sum + i > mid
+#       block_sum = i
+#       block_count += 1
+#     else
+#       block_sum += i
+#     end
+#     return false if block_count >= max_block_count
+#   end
+#   true
+# end
+#
+# k = 3
+# m = 5
+# a = [2,1,5,1,2,2,2]
+#
+# puts "Min Large sum #{solution(k, m, a)}"
 
-def binarySearch(a, x)
+#Caterpillar method
+
+#absdistinct
+#
+# def solution(a)
+#   abss = Hash.new
+#   front = 0
+#   (0..a.length - 1).each do |front|
+#       puts "front #{front}"
+#       abss[a[front].abs] = a[front].abs if !abss.has_key?(a[front].abs)
+#   end
+#   puts "abss #{abss}"
+#   abss.length
+# end
+# a = [-5,-3,-1,0,3,6]
+# puts "Num Abs Disctingt #{solution(a)}"
+
+
+#Count distint slices
+def solution (m, a)
+  numDist = 0
+  front = 0
+  slices = Hash.new
   n = a.length
-  beg = 0
-  ending = n - 1
-  result = -1
-  while (beg <= ending)
-    mid = (beg + ending) / 2
-    if (a[mid] <= x) #This condition can be changed to check for a validity in a problem
-      beg = mid + 1
-      result = mid
-    else
-      ending = mid - 1
+  (1..n - 1).each do |back|
+    while front < n and !slices.has_key?(a[front])
+      slices[a[front]] = a[front]
+      front += 1
+      numDist += 1 if slices.length == 1
+      puts "slices #{slices}"
     end
+    puts "slices after #{slices}"
+    slices = Hash.new
+    front = back
+    numDist += 1
   end
-  result
+  numDist
 end
 
-
-
-
-# MinMaxDivision
-
-def solution(k, m, a)
-
-  n = a.length
-  beg = a.max
-  ending = a.inject(0, :+)
-
-  return ending if k ==1
-  return beg if k >= n
-  while (beg <= ending)
-
-    puts "Beginig #{beg} - Ending #{ending}"
-    mid = (beg + ending) / 2
-    puts "Mid #{mid}"
-    if (check(a, k, mid)) #This condition can be changed to check for a validity in a problem
-      ending = mid - 1
-    else
-      beg = mid + 1
-    end
-  end
-  beg
-end
-
-def check(a, max_block_count, mid)
-  block_sum = 0
-  block_count = 0
-  a.each do |i|
-    if block_sum + i > mid
-      block_sum = i
-      block_count += 1
-    else
-      block_sum += i
-    end
-    return false if block_count >= max_block_count
-  end
-  true
-end
-
-k = 3
-m = 5
-a = [2,1,5,1,2,2,2]
-
-puts "Min Large sum #{solution(k, m, a)}"
+a = [3,4,5,5,2]
+#a = [1,2,3,4,5,6]
+#a = [5,5,2,4,4,2]
+m = 6
+#a = [1 , 1]
+#m = 1000000
+#For example, for the input (100000, [1, 1]) the solution returned a wrong answer (got 3 expected 2).
+puts "nun Dist #{solution(m, a)}"
